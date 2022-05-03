@@ -1,0 +1,244 @@
+---
+title: "The Relationship Between World Countries' Health and Overall Happiness"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, fig.align = "center", warning = F, message = F, R.options=list(max.print=100,dplyr.print_max=100))
+```
+## Divyaa Cherian dec2769
+# Introduction
+
+  The datasets I chose are the 2021 STC Health Index from the Hudson's Global Residence Index (https://globalresidenceindex.com/hnwi-index/health-index/), and the 2021 World Happiness Report from World Population Review (https://worldpopulationreview.com/country-rankings/happiest-countries-in-the-world). For the health index, I named the dataset world_health, and for the happiness dataset, I named it world_happiness. The world_health dataset contains the following variables: rank, country, health index, healthy life expectancy at birth, maternal mortality ratio (per 100,000 live births), proportion of births attended by skilled health personnel, under-five mortality rate (per 1000 live births), probability of dying from any of CVD, cancer, diabetes, CRD between age 30 and ext age 70k, mortality rate attributed to household and ambient air pollution (per 100,000 population), mortality rate attributed to exposure to unsafe WASH services (per 100,000 population), mortality rate attributed to unintentional poisoning (per 100,000 population).  The world_happiness dataset contains the following variables: rank, country, 2021 happiness score, 2020 happiness score, and 2022 population.
+
+  I chose these datasets because I thought it would be interesting to see if there was a relationship between a country's health quality and overall happiness. In the United States, healthcare is an important subject that needs to be addressed. Many Americans are often afraid to go to the hospital because they fear the sky-high costs of healthcare.
+
+  Therefore, my hypothesis is that the countries with the highest health indexes will also have the highest happiness scores. People who can worry less about paying for their healthcare costs will overall be happier and more satisfied with the country that they live in. I also think that positive health trends will translate into a high health index (ie. low mortality rates, high life expectancy, etc.)
+
+```{r}
+# To run, install tidyverse package
+# install.packages("tidyverse")
+library(tidyverse)
+# To run, install kableExtra package
+# install.packages("kableExtra")
+library(kableExtra)
+```
+## Dataset Details
+Here, I will upload the data from both datasets into Excel files and then read them into my code. Then, I will save both into 2 datasets called world_health and world_happiness. There are 201 total observations in world_health and 146 in world_happiness. Both datasets don't have any IDs in common. Though they both share rank and country in common, the IDs for these variables are named differently in both datasets.
+
+The IDs for world_health are as follows: RANK; COUNTRY; INDEX; Healthy life expectancy at birth (years); Maternal mortality ratio (per 100 000 live births); Proportion of births attended by skilled health personnel (%); Under-five mortality rate (per 1000 live births); Probability of dying from any of CVD, cancer, diabetes, CRD between age 30 and ext age 70k (%); Mortality rate attributed to household and ambient air pollution (per 100 000 population); Mortality rate attributed to exposure to unsafe WASH services (per 100 000 population); Mortality rate attributed to unintentional poisoning (per 100 000 population). 
+
+The IDs for world_happiness are as follows: rank; country; happiness2021; happiness2020; pop2022.
+
+Units: Health index is a percentage, and happiness score is out of a scale from 0 to 10. The units for life expectancy are years, and the other variables are either rates or percentages. 
+
+```{r}
+# Read in excel files with data.
+#world_happiness <- readxl::read_xlsx('/Users/divya/csv.data.xlsx')
+#world_health <- readxl::read_xlsx('/Users/divya/Health Index.xlsx')
+world_happiness <- read.csv('Happiness_Data.csv')
+world_health <- read_csv('Health Index.csv')
+
+# Save as datasets.
+world_health <- as.data.frame(world_health)
+world_happiness <- as.data.frame(world_happiness)
+
+# View datasets.
+world_health
+world_happiness
+```
+
+# Tidying
+```{r}
+# Find the names of countries that don't match. 
+testing_set <- anti_join(world_health, world_happiness, by = c("COUNTRY" = "Country"))
+# Arrange in alphabetical order.
+testing_set %>%
+  arrange(COUNTRY)
+
+# View just the countries in world_health dataset in alphabetical order.
+world_health %>%
+  select(COUNTRY) %>%
+  arrange(COUNTRY)
+# View just the countries in world_happiness dataset in alphabetical order.
+world_happiness %>%
+  select(Country) %>%
+  arrange(Country)
+
+# Rename countries in world_health so they match with the world_happiness dataset.
+world_health <- world_health %>%
+  mutate(COUNTRY = recode(COUNTRY, "United States of America" = "United States", "Viet Nam" = "Vietnam"))
+```
+I used anti_join to find the countries that didn't match between both datasets. Then, I arranged just the countries for each dataset in alphabetical order so that it was easier to identify the countries that had different names. I found that the United States and Vietnam were named differently in the world_health dataset, so I renamed them to match the country names in world_happiness.
+
+```{r}
+# Rename variables in world_happiness.
+new_world_happiness <- world_happiness %>%
+  select(-c("Happiness.2020", "X2022.Population")) %>% 
+  rename("2021_Happiness_Score" = "Happiness.2021")
+
+# Rename variables in world_health.
+new_world_health <- world_health %>%
+  rename("Rank" = "RANK", "Country" = "COUNTRY", "Health_index" = "INDEX", "Life expectancy (years)" = "Healthy life expectancy at birth (years)", "Maternity mortality ratio" = "Maternal mortality ratio (per 100 000 live births)", "Percent of birth attended by skilled" = "Proportion of births attended by skilled health personnel (%)", "Under 5 mortality rate" = "Under-five mortality rate (per 1000 live births)", "Cancer death rate 30-70 years" = "Probability of dying from any of CVD, cancer, diabetes, CRD between age 30 and ext age 70k (%)", "Mortality rate attributed to household and ambient air pollution" = "Mortality rate attributed to household and ambient air pollution (per 100 000 population)", "Mortality rate from unsafe water" = "Mortality rate attributed to exposure to unsafe WASH services (per 100 000 population)", "Mortality rate from unintentional poisoning" = "Mortality rate attributed to unintentional poisoning (per 100 000 population)")
+
+# Run new datasets.
+new_world_health
+new_world_happiness
+  
+```
+Before joining the world_health and world_happiness datasets together, I needed to make some changes to both datasets. For world_happiness, I decided to create a new dataset called new_world_happiness instead of overwriting the original. I dropped "happiness2020" from world_happiness because world_health only contains data for the year 2021. Since I'm joining the two datasets, it wouldn't make sense to have 2020 data for world_happiness and no 2020 data for world_health. I also dropped the 2022 population data from world_happiness, since I am focusing on the happiness scores and health data of various countries. Additionally, the population data is for 2022, and I have chosen to focus on 2021 alone. Finally, I renamed the variables for 2021's happiness score, country, and rank so that they all started with capital letters.
+
+For world_health, I renamed it to new_world_health instead of overwriting the original dataset. I then renamed the rank, country, and health_index variables so that they were not written in all caps and all started with capital letters. I also made sure that the name for the country variable was the same for both new_world_health and new_world_happiness, so that it would be easier to join the two datasets (I planned to use "Country" as the key). Finally, just for convenience's sake, I renamed the other variables using the following terms: Life expectancy, Maternity mortality ratio, Percent of birth attended by skilled, Under 5 mortality rate, Cancer death rate 30-70 years, Mortality rate attributed to household and ambient air pollution, Mortality rate from unsafe water, and Mortality rate from unintentional poisoning.
+
+
+
+# Joining/Merging and More Tidying
+```{r}
+# Join new datasets together. Drop ranks.
+health_and_happiness <- inner_join(new_world_happiness, new_world_health, by = "Country") %>%
+  ungroup() %>%
+  select(-c(Rank.x, Rank.y)) %>%
+  mutate_at(vars(`2021_Happiness_Score`: `Mortality rate from unintentional poisoning`), as.numeric) %>%
+  mutate_if(is.numeric, round, digits = 2)
+
+health_and_happiness
+
+# Create new dataset by tidying joined dataset.
+summarized_table <- health_and_happiness %>%
+  # Columns in summarized_table to put as rows.
+  pivot_longer(cols = c('2021_Happiness_Score':'Mortality rate from unintentional poisoning'), 
+               names_to = "Categories",           # Save all names as variable Categories.
+               values_to = "Values")           # Save cell values as variable Values. 
+
+summarized_table
+
+```
+
+After joining new_world_happiness and new_world_health and naming the new dataset health_and_happiness, I found that there were now 142 observations (so 59 less observations than new_world_health and 4 less observations than new_world_happiness). Next, I dropped the ranks variable. This is because both countries had different ranks for their health indexes and happiness scores, and it wouldn't have made sense to keep them if they didn't match. 
+
+I also created a new dataset by tidying the joined dataset health_and_happiness. Using the function pivot_longer, I grouped the variables 2021_Happiness_Score through Mortality Rate attributed to unintentional poisoning into a column called Categories. I then grouped the values for each variable into a separate column titled Values. This new dataset has 1,420 observations.
+
+
+
+# Wrangling
+```{r}
+# Find correlation coefficient for health index and happiness score.
+health_happiness_cor <- cor(health_and_happiness[2], health_and_happiness[3], use = "complete.obs") %>%
+  kbl() %>%
+  kable_styling(fixed_thead = T)          # Use kbl to style table.
+
+health_happiness_cor
+```
+Here, I found the correlation coefficient for 2021 Happiness Score and 2021 Health Index and used the kbl() package to style the table. The correlation coefficient was about 0.7474. This indicates a strong, positive linear relationship between a country's health index and happiness score. It also supports the idea that a country's health quality and overall happiness are positively related.
+
+
+```{r}
+# Group countries together based on their percentiles.
+grouped_countries <- health_and_happiness %>%
+  select(Country, `2021_Happiness_Score`, Health_index) %>%
+  # Create new percentile variable. 
+  mutate(percentiles= ntile(`2021_Happiness_Score`, 100)) %>%
+  # Create 4 categories of countries based on their happiness levels. 
+  mutate(score_categories = case_when(percentiles> 75 ~ "high", 50 < percentiles & percentiles<= 75 ~ "upper mid", 25 < percentiles & percentiles<= 50 ~ "lower mid", percentiles<= 25 & percentiles> 0 ~ "low")) %>%
+  arrange(desc(percentiles))
+ 
+# View dataset.
+grouped_countries
+# View only the United States.
+grouped_countries %>%
+  filter(Country == "United States")
+```
+
+I wanted to create a new categorical variable called score_categories. So, I grouped the countries in the health_and_happiness dataset into 4 percentiles: high (happiness scores and health indexes above the 75th percentile), upper mid (happiness scores and health indexes between the 50th and 75th percentiles), lower mid (happiness scores and health indexes between the 25th and 50th percentiles), and low (happiness scores and health indexes below the 25th percentile). I also used the filter function to see which percentile the United States was in (82nd percentile).
+
+```{r}
+# Calculate average happiness scores and health indexes per category.
+country_category_means <- grouped_countries %>%
+  # Group by categories.
+  group_by(score_categories) %>%
+  # Find mean happiness scores and health indexes.
+  summarise_if(is.numeric, mean, na.rm = T) %>%
+  # Arrange from greatest to least. 
+  arrange(desc(`2021_Happiness_Score`)) %>%
+  # Drop percentiles variable.
+  select(-c(percentiles))
+
+country_category_means
+```
+
+Then, I calculated the average Happiness Scores and Health indexes based on the new country categories. You can see how happiness scores and health indexes both decrease from the high to low categories. This supports my hypothesis that countries with higher happiness scores also have comparatively higher health indexes.
+
+```{r}
+# Save total number of countries.
+total_num <- grouped_countries %>%
+  # Tally all rows.
+  tally()
+
+# Find percentage of countries in each category.
+grouped_countries %>%
+  # Group by categories
+  group_by(score_categories) %>%
+  # Count number of countries in each category. Calculate count percentages using total number of countries.
+  summarise(counts = n(), percentages = n()/total_num[,1]) %>%
+  # Arrange categories. 
+  arrange(c('high', 'upper mid', 'lower mid', 'low'))
+```
+
+Finally, I wanted to see the percentage of countries per category. There are 142 countries total in the dataset. Approximately 17.6% of all the countries would be considered to have "high" happiness scores and health indexes; 17.6% would have moderately high happiness scores and health indexes; 29.6% would have moderately low happiness scores and health indexes; and 35.2% would have low happiness scores and health indexes.
+
+# Visualizations
+```{r}
+# Create bar graph of 4 categories.
+ggplot(country_category_means, aes(x = Health_index, y = `2021_Happiness_Score`,
+                              fill = score_categories)) + 
+  # Superimpose function on existing plot.
+  geom_bar(stat = "identity") +
+  # Change color scale.
+  scale_fill_brewer(palette = "Set2") +
+  # Add title. 
+  labs(title = "Average Happiness Score and Health Index Across Countries") + 
+  # Change theme.
+  theme_bw() + 
+  # Change x-axis scale.
+  scale_x_continuous(breaks = seq(from = 0, to = 1, by = 0.1))
+```
+I wanted to create a bar graph to better illustrate the relationship between countries' happiness scores and health indexes. You can clearly see how as health index increases, so does happiness score. There is also a substantial gap between countries in the low category versus lower mid. This is concerning because 35.2% of the countries in the dataset are found in the low category - this means that over a third of the total countries in the dataset have significantly lower happiness scores and health indexes compared to the other countries. 
+```{r}
+# Graph showing relationship between countries' happiness scores and health indexes.
+health_and_happiness %>%
+  # Omit missing values.
+  na.omit() %>%
+  ggplot(aes(x = Health_index, y = `2021_Happiness_Score`)) + 
+  # Change size of points.
+  geom_point(size = 3) + 
+  # Add regression line and change color.
+  geom_smooth(formula = y ~ x, method = lm, color = "#007d3c") +
+  # Add title and label axes.
+   labs(title = "Relationship Between Country's Health Index and Happiness Score", 
+       x = "2021 Health Index", y = "2021 Happiness Score") + 
+  # Change theme.
+  theme_bw() + 
+  # Change x-axis scale.
+  scale_x_continuous(breaks = seq(from = 0, to = 1, by = 0.2))
+```
+This graph truly expresses the relationship between health index and happiness scores. You can see that there is a relatively strong, positive linear relationship between health index and happiness score. There does not appear to be any significant outliers, and the points of the graph are relatively clustered together.
+```{r}
+# install.packages("GGally")
+# Call GGally package
+library("GGally")
+
+# Create correlation plot for all variables except country. Adjust size and position of labels, as well as layout. Add title and move legend to bottom.
+ggcorr(health_and_happiness[,2:11], label = TRUE, hjust = 1, size = 2.8, layout.exp = 5) + ggplot2::labs(title = "Correlation Plot for Health and Happiness Data") + theme(legend.position = "bottom")
+```
+I used the GGally package to create a correlation plot. Then, I modified the scale for each of the variable titles, adjusted the layout, added a title for my plot,and changed the theme so that the legend was found at the bottom.
+We again see that there is a strong, positive linear relationship between happiness score and health index (the score on the plot is rounded to 0.7, from the coefficient of 0.7475 that we calculated earlier). We also see that there is a strong, positive linear relationship between health index and the following variables: life expectancy (correlation coefficient is 0.9), and % of Birth attended by skilled (0.8). There is a strong, negative linear relationship between health index and the following variables: maternal mortality ratio (-0.9), Under 5 mortality rate (-0.9), Mortality rate from unsafe water (-0.9), and mortality rate attributed to unintentional poisoning (-0.8). There is a moderate, negative linear relationship between health index and the following variables: Cancer death rate 30-70 years (-0.5), and Mortality rate attributed to household and ambient air pollution (-0.4). Each of these results supports the idea that positive health trends translate to a country having a higher health index. Countries with a high life expectancy and percentage of births attended by qualified personnel have good health standards. Similarly, having low mortality rates indicates that the country has higher health standards.
+
+
+Thus, when looking at the results of my project, including the various graphs and summary statistics, there is reasonable evidence to support my hypothesis that the countries with the highest health indexes will also have the highest happiness scores. Additionally, positive health trends do seem to result in a higher health index (ie. low mortality rates, high life expectancy, etc.)
+```
+------------------------------------------------------------------------
+
+```{r, echo=F}
+```
