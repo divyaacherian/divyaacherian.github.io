@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Divyaa Cherian</title>
+    <link>/</link>
+    <description>Recent content on Divyaa Cherian</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Tue, 01 Dec 2020 21:13:14 -0500</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hello R Markdown</title>
+      <link>/post/2020/12/01/hello-r-markdown/</link>
+      <pubDate>Tue, 01 Dec 2020 21:13:14 -0500</pubDate>
+      
+      <guid>/post/2020/12/01/hello-r-markdown/</guid>
+      <description>R Markdown This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
+You can embed an R code chunk like this:
+summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.</description>
+    </item>
+    
+    <item>
+      <title>Project 2</title>
+      <link>/project/project2/</link>
+      <pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/project/project2/</guid>
+      <description> Test Project 2  </description>
+    </item>
+    
+    <item>
+      <title>Projects</title>
+      <link>/projects/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/</guid>
+      <description> Check out some of my coding projects below:
+ Wrangling &amp;amp; Exploratory Data Analysis
+ Modeling, Inference, Prediction
+  -- </description>
+    </item>
+    
+    <item>
+      <title>Resume</title>
+      <link>/resume/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/resume/</guid>
+      <description>    </description>
+    </item>
+    
+    <item>
+      <title>The Relationship Between World Countries&#39; Health and Overall Happiness</title>
+      <link>/project/project1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/project/project1/</guid>
+      <description>Divyaa Cherian dec2769  Introduction The datasets I chose are the 2021 STC Health Index from the Hudson’s Global Residence Index (https://globalresidenceindex.com/hnwi-index/health-index/), and the 2021 World Happiness Report from World Population Review (https://worldpopulationreview.com/country-rankings/happiest-countries-in-the-world). For the health index, I named the dataset world_health, and for the happiness dataset, I named it world_happiness. The world_health dataset contains the following variables: rank, country, health index, healthy life expectancy at birth, maternal mortality ratio (per 100,000 live births), proportion of births attended by skilled health personnel, under-five mortality rate (per 1000 live births), probability of dying from any of CVD, cancer, diabetes, CRD between age 30 and ext age 70k, mortality rate attributed to household and ambient air pollution (per 100,000 population), mortality rate attributed to exposure to unsafe WASH services (per 100,000 population), mortality rate attributed to unintentional poisoning (per 100,000 population).</description>
+    </item>
+    
+    <item>
+      <title>The Relationship Between World Countries&#39; Health and Overall Happiness</title>
+      <link>/project1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/project1/</guid>
+      <description>Divyaa Cherian dec2769  Introduction The datasets I chose are the 2021 STC Health Index from the Hudson’s Global Residence Index (https://globalresidenceindex.com/hnwi-index/health-index/), and the 2021 World Happiness Report from World Population Review (https://worldpopulationreview.com/country-rankings/happiest-countries-in-the-world). For the health index, I named the dataset world_health, and for the happiness dataset, I named it world_happiness. The world_health dataset contains the following variables: rank, country, health index, healthy life expectancy at birth, maternal mortality ratio (per 100,000 live births), proportion of births attended by skilled health personnel, under-five mortality rate (per 1000 live births), probability of dying from any of CVD, cancer, diabetes, CRD between age 30 and ext age 70k, mortality rate attributed to household and ambient air pollution (per 100,000 population), mortality rate attributed to exposure to unsafe WASH services (per 100,000 population), mortality rate attributed to unintentional poisoning (per 100,000 population).</description>
+    </item>
+    
+  </channel>
+</rss>

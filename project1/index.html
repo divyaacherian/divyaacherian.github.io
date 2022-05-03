@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Divyaa Cherian" />
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+    <title>The Relationship Between World Countries&#39; Health and Overall Happiness</title>
+    <meta name="generator" content="Hugo 0.98.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
+    
+    <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    
+  </head>
+blogdown::serve_site()
+  <body>
+    <div id="wrap">
+      
+      <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/"><i class="fa fa-home"></i></a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+        <li><a href="/post/">BLOG</a></li>
+        
+        <li><a href="/projects/">PROJECTS</a></li>
+        
+        <li><a href="/resume/">RESUME</a></li>
+        
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      <div class="container">
+        <div class="blog-post">
+          <h3>
+            <strong><a href="/project1/">The Relationship Between World Countries&#39; Health and Overall Happiness</a></strong>
+          </h3>
+        </div>
+ 
+<div class="blog-title">
+          <h4>
+         January 1, 0001 
+            &nbsp;&nbsp;
+            
+          </h4>
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="blogpost">
+              
+<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
+<link href="/rmarkdown-libs/lightable/lightable.css" rel="stylesheet" />
+
+
+<div id="divyaa-cherian-dec2769" class="section level2">
+<h2>Divyaa Cherian dec2769</h2>
+</div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>The datasets I chose are the 2021 STC Health Index from the Hudson’s Global Residence Index (<a href="https://globalresidenceindex.com/hnwi-index/health-index/" class="uri">https://globalresidenceindex.com/hnwi-index/health-index/</a>), and the 2021 World Happiness Report from World Population Review (<a href="https://worldpopulationreview.com/country-rankings/happiest-countries-in-the-world" class="uri">https://worldpopulationreview.com/country-rankings/happiest-countries-in-the-world</a>). For the health index, I named the dataset world_health, and for the happiness dataset, I named it world_happiness. The world_health dataset contains the following variables: rank, country, health index, healthy life expectancy at birth, maternal mortality ratio (per 100,000 live births), proportion of births attended by skilled health personnel, under-five mortality rate (per 1000 live births), probability of dying from any of CVD, cancer, diabetes, CRD between age 30 and ext age 70k, mortality rate attributed to household and ambient air pollution (per 100,000 population), mortality rate attributed to exposure to unsafe WASH services (per 100,000 population), mortality rate attributed to unintentional poisoning (per 100,000 population). The world_happiness dataset contains the following variables: rank, country, 2021 happiness score, 2020 happiness score, and 2022 population.</p>
+<p>I chose these datasets because I thought it would be interesting to see if there was a relationship between a country’s health quality and overall happiness. In the United States, healthcare is an important subject that needs to be addressed. Many Americans are often afraid to go to the hospital because they fear the sky-high costs of healthcare.</p>
+<p>Therefore, my hypothesis is that the countries with the highest health indexes will also have the highest happiness scores. People who can worry less about paying for their healthcare costs will overall be happier and more satisfied with the country that they live in. I also think that positive health trends will translate into a high health index (ie. low mortality rates, high life expectancy, etc.)</p>
+<pre class="r"><code># To run, install tidyverse package
+# install.packages(&quot;tidyverse&quot;)
+library(tidyverse)
+# To run, install kableExtra package
+# install.packages(&quot;kableExtra&quot;)
+library(kableExtra)</code></pre>
+<div id="dataset-details" class="section level2">
+<h2>Dataset Details</h2>
+<p>Here, I will upload the data from both datasets into Excel files and then read them into my code. Then, I will save both into 2 datasets called world_health and world_happiness. There are 201 total observations in world_health and 146 in world_happiness. Both datasets don’t have any IDs in common. Though they both share rank and country in common, the IDs for these variables are named differently in both datasets.</p>
+<p>The IDs for world_health are as follows: RANK; COUNTRY; INDEX; Healthy life expectancy at birth (years); Maternal mortality ratio (per 100 000 live births); Proportion of births attended by skilled health personnel (%); Under-five mortality rate (per 1000 live births); Probability of dying from any of CVD, cancer, diabetes, CRD between age 30 and ext age 70k (%); Mortality rate attributed to household and ambient air pollution (per 100 000 population); Mortality rate attributed to exposure to unsafe WASH services (per 100 000 population); Mortality rate attributed to unintentional poisoning (per 100 000 population).</p>
+<p>The IDs for world_happiness are as follows: rank; country; happiness2021; happiness2020; pop2022.</p>
+<p>Units: Health index is a percentage, and happiness score is out of a scale from 0 to 10. The units for life expectancy are years, and the other variables are either rates or percentages.</p>
+<pre class="r"><code># Read in excel files with data.
+world_happiness &lt;- readxl::read_xlsx(&#39;/Users/divya/csv.data.xlsx&#39;)
+world_health &lt;- readxl::read_xlsx(&#39;/Users/divya/Health Index.xlsx&#39;)
+
+# Save as datasets.
+world_health &lt;- as.data.frame(world_health)
+world_happiness &lt;- as.data.frame(world_happiness)
+
+# View datasets.
+world_health</code></pre>
+<pre><code>##   RANK     COUNTRY INDEX Healthy life expectancy at birth (years)
+## 1    1      Monaco  1.00                                    90.00
+## 2    2   Hong Kong  0.99                                    84.24
+## 3    3   Australia  0.94                                    71.90
+## 4    4     Finland  0.93                                    71.00
+## 5    4     Iceland  0.93                                    72.70
+## 6    4       Macau  0.93                                    80.77
+## 7    4      Norway  0.93                                    72.00
+## 8    4      Sweden  0.93                                    72.00
+## 9    4 Switzerland  0.93                                    73.10
+##   Maternal mortality ratio (per 100 000 live births)
+## 1                                                N/A
+## 2                                                  0
+## 3                                                  6
+## 4                                                  3
+## 5                                                  3
+## 6                                                  0
+## 7                                                  5
+## 8                                                  4
+## 9                                                  5
+##   Proportion of births attended by skilled health personnel (%)
+## 1                                                           N/A
+## 2                                                           100
+## 3                                                            99
+## 4                                                           100
+## 5                                                           N/A
+## 6                                                           100
+## 7                                                            99
+## 8                                                           N/A
+## 9                                                           N/A
+##   Under-five mortality rate (per 1000 live births)
+## 1                                              3.5
+## 2                                              1.6
+## 3                                              3.8
+## 4                               2.2999999999999998
+## 5                                                2
+## 6                                              4.3
+## 7                                              2.6
+## 8                                                3
+## 9                                              3.9
+##   Probability of dying from any of CVD, cancer, diabetes, CRD between age 30 and ext age 70k (%)
+## 1                                                                                            N/A
+## 2                                                                                            N/A
+## 3                                                                                            8.9
+## 4                                                                                           10.1
+## 5                                                                             8.3000000000000007
+## 6                                                                                            N/A
+## 7                                                                                            9.6
+## 8                                                                                            9.1
+## 9                                                                             8.6999999999999993
+##   Mortality rate attributed to household and ambient air pollution (per 100 000 population)
+## 1                                                                                       N/A
+## 2                                                                                       N/A
+## 3                                                                                       0.4
+## 4                                                                                         6
+## 5                                                                                       6.4
+## 6                                                                                       N/A
+## 7                                                                                      12.7
+## 8                                                                                       0.4
+## 9                                                                                      18.5
+##   Mortality rate attributed to exposure to unsafe WASH services (per 100 000 population)
+## 1                                                                                    N/A
+## 2                                                                                    N/A
+## 3                                                                                   &lt;0.1
+## 4                                                                                    0.2
+## 5                                                                                   &lt;0.1
+## 6                                                                                    N/A
+## 7                                                                                    0.5
+## 8                                                                     1.1000000000000001
+## 9                                                                                    0.3
+##   Mortality rate attributed to unintentional poisoning (per 100 000 population)
+## 1                                                                           N/A
+## 2                                                                           N/A
+## 3                                                                           0.5
+## 4                                                                           0.6
+## 5                                                                           0.7
+## 6                                                                           N/A
+## 7                                                            1.1000000000000001
+## 8                                                                           0.6
+## 9                                                                           0.2
+##  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 192 rows ]</code></pre>
+<pre class="r"><code>world_happiness</code></pre>
+<pre><code>##    rank        country happiness2021 happiness2020    pop2022
+## 1     1        Finland         7.842         7.809   5554.960
+## 2     2        Denmark         7.620         7.646   5834.950
+## 3     3    Switzerland         7.571         7.560   8773.637
+## 4     4        Iceland         7.554         7.504    345.393
+## 5     5    Netherlands         7.464         7.449  17211.447
+## 6     6         Norway         7.392         7.488   5511.370
+## 7     7         Sweden         7.363         7.353  10218.971
+## 8     8     Luxembourg         7.324         7.238    642.371
+## 9     9    New Zealand         7.277         7.300   4898.203
+## 10   10        Austria         7.268         7.294   9066.710
+## 11   11      Australia         7.183         7.223  26068.792
+## 12   12         Israel         7.157         7.129   8922.892
+## 13   13        Germany         7.155         7.076  83883.596
+## 14   14         Canada         7.103         7.232  38388.419
+## 15   15        Ireland         7.085         7.129   5020.199
+## 16   16     Costa Rica         7.069         7.121   5182.354
+## 17   17 United Kingdom         7.064         7.165  68497.907
+## 18   18 Czech Republic         6.965         6.911  10736.784
+## 19   19  United States         6.951         6.940 334805.269
+## 20   20        Belgium         6.834         6.864  11668.278
+##  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 126 rows ]</code></pre>
+</div>
+</div>
+<div id="tidying" class="section level1">
+<h1>Tidying</h1>
+<pre class="r"><code># Find the names of countries that don&#39;t match. 
+testing_set &lt;- anti_join(world_health, world_happiness, by = c(&quot;COUNTRY&quot; = &quot;country&quot;))
+# Arrange in alphabetical order.
+testing_set %&gt;%
+  arrange(COUNTRY)</code></pre>
+<pre><code>##   RANK             COUNTRY INDEX Healthy life expectancy at birth (years)
+## 1   35             Andorra  0.88                                     82.8
+## 2  194              Angola  0.00                                     45.8
+## 3   27 Antigua and Barbuda  0.89                                     67.5
+## 4   68             Bahamas  0.81                                     66.6
+## 5   44            Barbados  0.86                                     66.6
+## 6   99              Belize  0.72                                     62.3
+## 7  124              Bhutan  0.62                                     61.2
+## 8   27   Brunei Darussalam  0.89                                     70.4
+## 9  113          Cabo Verde  0.67                                     64.4
+##   Maternal mortality ratio (per 100 000 live births)
+## 1                                                N/A
+## 2                                                477
+## 3                                                N/A
+## 4                                                 80
+## 5                                                 27
+## 6                                                 28
+## 7                                                148
+## 8                                                 23
+## 9                                                 42
+##   Proportion of births attended by skilled health personnel (%)
+## 1                                                           100
+## 2                                                            47
+## 3                                                           100
+## 4                                                            98
+## 5                                                            99
+## 6                                                            94
+## 7                                                            75
+## 8                                                           100
+## 9                                                            92
+##   Under-five mortality rate (per 1000 live births)
+## 1                                              2.8
+## 2                                            156.9
+## 3                                              8.1
+## 4                                             12.1
+## 5                                               13
+## 6                                             16.5
+## 7                                             32.9
+## 8                               10.199999999999999
+## 9                                             24.5
+##   Probability of dying from any of CVD, cancer, diabetes, CRD between age 30 and ext age 70k (%)
+## 1                                                                                            N/A
+## 2                                                                                           24.8
+## 3                                                                                           15.6
+## 4                                                                                           16.8
+## 5                                                                                           16.2
+## 6                                                                                           22.5
+## 7                                                                                           23.1
+## 8                                                                                           12.6
+## 9                                                                             16.100000000000001
+##   Mortality rate attributed to household and ambient air pollution (per 100 000 population)
+## 1                                                                                       N/A
+## 2                                                                                     105.8
+## 3                                                                                       N/A
+## 4                                                                                      20.3
+## 5                                                                                      17.3
+## 6                                                                        17.100000000000001
+## 7                                                                                      58.9
+## 8                                                                                       0.2
+## 9                                                                                      56.1
+##   Mortality rate attributed to exposure to unsafe WASH services (per 100 000 population)
+## 1                                                                                    N/A
+## 2                                                                                  111.2
+## 3                                                                                    N/A
+## 4                                                                                    0.1
+## 5                                                                                    0.2
+## 6                                                                                    1.2
+## 7                                                                                    7.1
+## 8                                                                                   &lt;0.1
+## 9                                                                                    4.5
+##   Mortality rate attributed to unintentional poisoning (per 100 000 population)
+## 1                                                                           N/A
+## 2                                                                           5.7
+## 3                                                                           0.6
+## 4                                                                           0.3
+## 5                                                                           0.5
+## 6                                                                           0.8
+## 7                                                                           0.9
+## 8                                                                           0.2
+## 9                                                                           0.5
+##  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 52 rows ]</code></pre>
+<pre class="r"><code># View just the countries in world_health dataset in alphabetical order.
+world_health %&gt;%
+  select(COUNTRY) %&gt;%
+  arrange(COUNTRY)</code></pre>
+<pre><code>##                              COUNTRY
+## 1                        Afghanistan
+## 2                            Albania
+## 3                            Algeria
+## 4                            Andorra
+## 5                             Angola
+## 6                Antigua and Barbuda
+## 7                          Argentina
+## 8                            Armenia
+## 9                          Australia
+## 10                           Austria
+## 11                        Azerbaijan
+## 12                           Bahamas
+## 13                           Bahrain
+## 14                        Bangladesh
+## 15                          Barbados
+## 16                           Belarus
+## 17                           Belgium
+## 18                            Belize
+## 19                             Benin
+## 20                            Bhutan
+## 21                           Bolivia
+## 22            Bosnia and Herzegovina
+## 23                          Botswana
+## 24                            Brazil
+## 25                 Brunei Darussalam
+## 26                          Bulgaria
+## 27                      Burkina Faso
+## 28                           Burundi
+## 29                        Cabo Verde
+## 30                          Cambodia
+## 31                          Cameroon
+## 32                            Canada
+## 33          Central African Republic
+## 34                              Chad
+## 35                             Chile
+## 36                             China
+## 37                          Colombia
+## 38                           Comoros
+## 39                             Congo
+## 40                      Cook Islands
+## 41                        Costa Rica
+## 42                     Côte d&#39;Ivoire
+## 43                           Croatia
+## 44                              Cuba
+## 45                            Cyprus
+## 46                    Czech Republic
+## 47  Democratic Republic of the Congo
+## 48                           Denmark
+## 49                          Djibouti
+## 50                          Dominica
+## 51                Dominican Republic
+## 52                           Ecuador
+## 53                             Egypt
+## 54                       El Salvador
+## 55                 Equatorial Guinea
+## 56                           Eritrea
+## 57                           Estonia
+## 58                          Ethiopia
+## 59                              Fiji
+## 60                           Finland
+## 61                            France
+## 62                             Gabon
+## 63                            Gambia
+## 64                           Georgia
+## 65                           Germany
+## 66                             Ghana
+## 67                            Greece
+## 68                           Grenada
+## 69                         Guatemala
+## 70                          Guernsey
+## 71                            Guinea
+## 72                     Guinea-Bissau
+## 73                            Guyana
+## 74                             Haiti
+## 75                          Honduras
+## 76                         Hong Kong
+## 77                           Hungary
+## 78                           Iceland
+## 79                             India
+## 80                         Indonesia
+## 81                              Iran
+## 82                              Iraq
+## 83                           Ireland
+## 84                       Isle of Man
+## 85                            Israel
+## 86                             Italy
+## 87                           Jamaica
+## 88                             Japan
+## 89                            Jersey
+## 90                            Jordan
+## 91                        Kazakhstan
+## 92                             Kenya
+## 93                          Kiribati
+## 94                            Kuwait
+## 95                        Kyrgyzstan
+## 96                              Laos
+## 97                            Latvia
+## 98                           Lebanon
+## 99                           Lesotho
+## 100                          Liberia
+##  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 101 rows ]</code></pre>
+<pre class="r"><code># View just the countries in world_happiness dataset in alphabetical order.
+world_happiness %&gt;%
+  select(country) %&gt;%
+  arrange(country)</code></pre>
+<pre><code>##                    country
+## 1              Afghanistan
+## 2                  Albania
+## 3                  Algeria
+## 4                Argentina
+## 5                  Armenia
+## 6                Australia
+## 7                  Austria
+## 8               Azerbaijan
+## 9                  Bahrain
+## 10              Bangladesh
+## 11                 Belarus
+## 12                 Belgium
+## 13                   Benin
+## 14                 Bolivia
+## 15  Bosnia and Herzegovina
+## 16                Botswana
+## 17                  Brazil
+## 18                Bulgaria
+## 19            Burkina Faso
+## 20                 Burundi
+## 21                Cambodia
+## 22                Cameroon
+## 23                  Canada
+## 24                    Chad
+## 25                   Chile
+## 26                   China
+## 27                Colombia
+## 28                 Comoros
+## 29              Costa Rica
+## 30                 Croatia
+## 31                  Cyprus
+## 32          Czech Republic
+## 33                 Denmark
+## 34      Dominican Republic
+## 35                 Ecuador
+## 36                   Egypt
+## 37             El Salvador
+## 38                 Estonia
+## 39                Eswatini
+## 40                Ethiopia
+## 41                 Finland
+## 42                  France
+## 43                   Gabon
+## 44                  Gambia
+## 45                 Georgia
+## 46                 Germany
+## 47                   Ghana
+## 48                  Greece
+## 49               Guatemala
+## 50                  Guinea
+## 51                   Haiti
+## 52                Honduras
+## 53               Hong Kong
+## 54                 Hungary
+## 55                 Iceland
+## 56                   India
+## 57               Indonesia
+## 58                    Iran
+## 59                    Iraq
+## 60                 Ireland
+## 61                  Israel
+## 62                   Italy
+## 63             Ivory Coast
+## 64                 Jamaica
+## 65                   Japan
+## 66                  Jordan
+## 67              Kazakhstan
+## 68                   Kenya
+## 69                  Kuwait
+## 70              Kyrgyzstan
+## 71                    Laos
+## 72                  Latvia
+## 73                 Lebanon
+## 74                 Lesotho
+## 75                 Liberia
+## 76                   Libya
+## 77               Lithuania
+## 78              Luxembourg
+## 79              Madagascar
+## 80                  Malawi
+## 81                Malaysia
+## 82                Maldives
+## 83                    Mali
+## 84                   Malta
+## 85              Mauritania
+## 86               Mauritius
+## 87                  Mexico
+## 88                 Moldova
+## 89                Mongolia
+## 90              Montenegro
+## 91                 Morocco
+## 92              Mozambique
+## 93                 Myanmar
+## 94                 Namibia
+## 95                   Nepal
+## 96             Netherlands
+## 97             New Zealand
+## 98               Nicaragua
+## 99                   Niger
+## 100                Nigeria
+##  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 46 rows ]</code></pre>
+<pre class="r"><code># Rename countries in world_health so they match with the world_happiness dataset.
+world_health &lt;- world_health %&gt;%
+  mutate(COUNTRY = recode(COUNTRY, &quot;United States of America&quot; = &quot;United States&quot;, &quot;Viet Nam&quot; = &quot;Vietnam&quot;))</code></pre>
+<p>I used anti_join to find the countries that didn’t match between both datasets. Then, I arranged just the countries for each dataset in alphabetical order so that it was easier to identify the countries that had different names. I found that the United States and Vietnam were named differently in the world_health dataset, so I renamed them to match the country names in world_happiness.</p>
+<pre class="r"><code># Rename variables in world_happiness.
+new_world_happiness &lt;- world_happiness %&gt;%
+  select(-c(&quot;happiness2020&quot;, &quot;pop2022&quot;)) %&gt;% 
+  rename(&quot;2021_Happiness_Score&quot; = &quot;happiness2021&quot;, &quot;Country&quot; = &quot;country&quot;, &quot;Rank&quot; = &quot;rank&quot;)
+
+# Rename variables in world_health.
+new_world_health &lt;- world_health %&gt;%
+  rename(&quot;Rank&quot; = &quot;RANK&quot;, &quot;Country&quot; = &quot;COUNTRY&quot;, &quot;Health_index&quot; = &quot;INDEX&quot;, &quot;Life expectancy (years)&quot; = &quot;Healthy life expectancy at birth (years)&quot;, &quot;Maternity mortality ratio&quot; = &quot;Maternal mortality ratio (per 100 000 live births)&quot;, &quot;Percent of birth attended by skilled&quot; = &quot;Proportion of births attended by skilled health personnel (%)&quot;, &quot;Under 5 mortality rate&quot; = &quot;Under-five mortality rate (per 1000 live births)&quot;, &quot;Cancer death rate 30-70 years&quot; = &quot;Probability of dying from any of CVD, cancer, diabetes, CRD between age 30 and ext age 70k (%)&quot;, &quot;Mortality rate attributed to household and ambient air pollution&quot; = &quot;Mortality rate attributed to household and ambient air pollution (per 100 000 population)&quot;, &quot;Mortality rate from unsafe water&quot; = &quot;Mortality rate attributed to exposure to unsafe WASH services (per 100 000 population)&quot;, &quot;Mortality rate from unintentional poisoning&quot; = &quot;Mortality rate attributed to unintentional poisoning (per 100 000 population)&quot;)
+
+# Run new datasets.
+new_world_health</code></pre>
+<pre><code>##   Rank     Country Health_index Life expectancy (years)
+## 1    1      Monaco         1.00                   90.00
+## 2    2   Hong Kong         0.99                   84.24
+## 3    3   Australia         0.94                   71.90
+## 4    4     Finland         0.93                   71.00
+## 5    4     Iceland         0.93                   72.70
+## 6    4       Macau         0.93                   80.77
+## 7    4      Norway         0.93                   72.00
+## 8    4      Sweden         0.93                   72.00
+## 9    4 Switzerland         0.93                   73.10
+##   Maternity mortality ratio Percent of birth attended by skilled
+## 1                       N/A                                  N/A
+## 2                         0                                  100
+## 3                         6                                   99
+## 4                         3                                  100
+## 5                         3                                  N/A
+## 6                         0                                  100
+## 7                         5                                   99
+## 8                         4                                  N/A
+## 9                         5                                  N/A
+##   Under 5 mortality rate Cancer death rate 30-70 years
+## 1                    3.5                           N/A
+## 2                    1.6                           N/A
+## 3                    3.8                           8.9
+## 4     2.2999999999999998                          10.1
+## 5                      2            8.3000000000000007
+## 6                    4.3                           N/A
+## 7                    2.6                           9.6
+## 8                      3                           9.1
+## 9                    3.9            8.6999999999999993
+##   Mortality rate attributed to household and ambient air pollution
+## 1                                                              N/A
+## 2                                                              N/A
+## 3                                                              0.4
+## 4                                                                6
+## 5                                                              6.4
+## 6                                                              N/A
+## 7                                                             12.7
+## 8                                                              0.4
+## 9                                                             18.5
+##   Mortality rate from unsafe water Mortality rate from unintentional poisoning
+## 1                              N/A                                         N/A
+## 2                              N/A                                         N/A
+## 3                             &lt;0.1                                         0.5
+## 4                              0.2                                         0.6
+## 5                             &lt;0.1                                         0.7
+## 6                              N/A                                         N/A
+## 7                              0.5                          1.1000000000000001
+## 8               1.1000000000000001                                         0.6
+## 9                              0.3                                         0.2
+##  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 192 rows ]</code></pre>
+<pre class="r"><code>new_world_happiness</code></pre>
+<pre><code>##    Rank              Country 2021_Happiness_Score
+## 1     1              Finland                7.842
+## 2     2              Denmark                7.620
+## 3     3          Switzerland                7.571
+## 4     4              Iceland                7.554
+## 5     5          Netherlands                7.464
+## 6     6               Norway                7.392
+## 7     7               Sweden                7.363
+## 8     8           Luxembourg                7.324
+## 9     9          New Zealand                7.277
+## 10   10              Austria                7.268
+## 11   11            Australia                7.183
+## 12   12               Israel                7.157
+## 13   13              Germany                7.155
+## 14   14               Canada                7.103
+## 15   15              Ireland                7.085
+## 16   16           Costa Rica                7.069
+## 17   17       United Kingdom                7.064
+## 18   18       Czech Republic                6.965
+## 19   19        United States                6.951
+## 20   20              Belgium                6.834
+## 21   21               France                6.690
+## 22   22              Bahrain                6.647
+## 23   23                Malta                6.602
+## 24   24               Taiwan                6.584
+## 25   25 United Arab Emirates                6.561
+## 26   26         Saudi Arabia                6.494
+## 27   27                Spain                6.491
+## 28   28                Italy                6.483
+## 29   29             Slovenia                6.461
+## 30   30            Guatemala                6.435
+## 31   31              Uruguay                6.431
+## 32   32            Singapore                6.377
+## 33   33             Slovakia                6.331
+##  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 113 rows ]</code></pre>
+<p>Before joining the world_health and world_happiness datasets together, I needed to make some changes to both datasets. For world_happiness, I decided to create a new dataset called new_world_happiness instead of overwriting the original. I dropped “happiness2020” from world_happiness because world_health only contains data for the year 2021. Since I’m joining the two datasets, it wouldn’t make sense to have 2020 data for world_happiness and no 2020 data for world_health. I also dropped the 2022 population data from world_happiness, since I am focusing on the happiness scores and health data of various countries. Additionally, the population data is for 2022, and I have chosen to focus on 2021 alone. Finally, I renamed the variables for 2021’s happiness score, country, and rank so that they all started with capital letters.</p>
+<p>For world_health, I renamed it to new_world_health instead of overwriting the original dataset. I then renamed the rank, country, and health_index variables so that they were not written in all caps and all started with capital letters. I also made sure that the name for the country variable was the same for both new_world_health and new_world_happiness, so that it would be easier to join the two datasets (I planned to use “Country” as the key). Finally, just for convenience’s sake, I renamed the other variables using the following terms: Life expectancy, Maternity mortality ratio, Percent of birth attended by skilled, Under 5 mortality rate, Cancer death rate 30-70 years, Mortality rate attributed to household and ambient air pollution, Mortality rate from unsafe water, and Mortality rate from unintentional poisoning.</p>
+</div>
+<div id="joiningmerging-and-more-tidying" class="section level1">
+<h1>Joining/Merging and More Tidying</h1>
+<pre class="r"><code># Join new datasets together. Drop ranks.
+health_and_happiness &lt;- inner_join(new_world_happiness, new_world_health, by = &quot;Country&quot;) %&gt;%
+  ungroup() %&gt;%
+  select(-c(Rank.x, Rank.y)) %&gt;%
+  mutate_at(vars(`2021_Happiness_Score`: `Mortality rate from unintentional poisoning`), as.numeric) %&gt;%
+  mutate_if(is.numeric, round, digits = 2)
+
+health_and_happiness</code></pre>
+<pre><code>##       Country 2021_Happiness_Score Health_index Life expectancy (years)
+## 1     Finland                 7.84         0.93                    71.0
+## 2     Denmark                 7.62         0.92                    71.2
+## 3 Switzerland                 7.57         0.93                    73.1
+## 4     Iceland                 7.55         0.93                    72.7
+## 5 Netherlands                 7.46         0.90                    72.2
+## 6      Norway                 7.39         0.93                    72.0
+## 7      Sweden                 7.36         0.93                    72.0
+## 8  Luxembourg                 7.32         0.92                    71.8
+## 9 New Zealand                 7.28         0.92                    71.6
+##   Maternity mortality ratio Percent of birth attended by skilled
+## 1                         3                                  100
+## 2                         6                                   98
+## 3                         5                                   NA
+## 4                         3                                   NA
+## 5                         7                                   NA
+## 6                         5                                   99
+## 7                         4                                   NA
+## 8                        10                                  100
+## 9                        11                                   97
+##   Under 5 mortality rate Cancer death rate 30-70 years
+## 1                    2.3                          10.1
+## 2                    3.5                          11.6
+## 3                    3.9                           8.7
+## 4                    2.0                           8.3
+## 5                    3.8                          11.0
+## 6                    2.6                           9.6
+## 7                    3.0                           9.1
+## 8                    1.9                           9.7
+## 9                    5.7                          10.4
+##   Mortality rate attributed to household and ambient air pollution
+## 1                                                              6.0
+## 2                                                             20.3
+## 3                                                             18.5
+## 4                                                              6.4
+## 5                                                             24.0
+## 6                                                             12.7
+## 7                                                              0.4
+## 8                                                             19.8
+## 9                                                              0.5
+##   Mortality rate from unsafe water Mortality rate from unintentional poisoning
+## 1                              0.2                                         0.6
+## 2                              0.8                                         0.4
+## 3                              0.3                                         0.2
+## 4                               NA                                         0.7
+## 5                              0.2                                         0.2
+## 6                              0.5                                         1.1
+## 7                              1.1                                         0.6
+## 8                              0.1                                         0.3
+## 9                              0.6                                         0.3
+##  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 133 rows ]</code></pre>
+<pre class="r"><code># Create new dataset by tidying joined dataset.
+summarized_table &lt;- health_and_happiness %&gt;%
+  # Columns in summarized_table to put as rows.
+  pivot_longer(cols = c(&#39;2021_Happiness_Score&#39;:&#39;Mortality rate from unintentional poisoning&#39;), 
+               names_to = &quot;Categories&quot;,           # Save all names as variable Categories.
+               values_to = &quot;Values&quot;)           # Save cell values as variable Values. 
+
+summarized_table</code></pre>
+<pre><code>## # A tibble: 1,420 × 3
+##    Country Categories                                                     Values
+##    &lt;chr&gt;   &lt;chr&gt;                                                           &lt;dbl&gt;
+##  1 Finland 2021_Happiness_Score                                             7.84
+##  2 Finland Health_index                                                     0.93
+##  3 Finland Life expectancy (years)                                         71   
+##  4 Finland Maternity mortality ratio                                        3   
+##  5 Finland Percent of birth attended by skilled                           100   
+##  6 Finland Under 5 mortality rate                                           2.3 
+##  7 Finland Cancer death rate 30-70 years                                   10.1 
+##  8 Finland Mortality rate attributed to household and ambient air pollut…   6   
+##  9 Finland Mortality rate from unsafe water                                 0.2 
+## 10 Finland Mortality rate from unintentional poisoning                      0.6 
+## # … with 1,410 more rows</code></pre>
+<p>After joining new_world_happiness and new_world_health and naming the new dataset health_and_happiness, I found that there were now 142 observations (so 59 less observations than new_world_health and 4 less observations than new_world_happiness). Next, I dropped the ranks variable. This is because both countries had different ranks for their health indexes and happiness scores, and it wouldn’t have made sense to keep them if they didn’t match.</p>
+<p>I also created a new dataset by tidying the joined dataset health_and_happiness. Using the function pivot_longer, I grouped the variables 2021_Happiness_Score through Mortality Rate attributed to unintentional poisoning into a column called Categories. I then grouped the values for each variable into a separate column titled Values. This new dataset has 1,420 observations.</p>
+</div>
+<div id="wrangling" class="section level1">
+<h1>Wrangling</h1>
+<pre class="r"><code># Find correlation coefficient for health index and happiness score.
+health_happiness_cor &lt;- cor(health_and_happiness[2], health_and_happiness[3], use = &quot;complete.obs&quot;) %&gt;%
+  kbl() %&gt;%
+  kable_styling(fixed_thead = T)          # Use kbl to style table.
+
+health_happiness_cor</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+Health_index
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+2021_Happiness_Score
+</td>
+<td style="text-align:right;">
+0.7474547
+</td>
+</tr>
+</tbody>
+</table>
+<p>Here, I found the correlation coefficient for 2021 Happiness Score and 2021 Health Index and used the kbl() package to style the table. The correlation coefficient was about 0.7475. This indicates a strong, positive linear relationship between a country’s health index and happiness score. It also supports the idea that a country’s health quality and overall happiness are positively related.</p>
+<pre class="r"><code># Group countries together based on their percentiles.
+grouped_countries &lt;- health_and_happiness %&gt;%
+  select(Country, `2021_Happiness_Score`, Health_index) %&gt;%
+  # Create new percentile variable. 
+  mutate(percentiles= ntile(`2021_Happiness_Score`, 100)) %&gt;%
+  # Create 4 categories of countries based on their happiness levels. 
+  mutate(score_categories = case_when(percentiles&gt; 75 ~ &quot;high&quot;, 50 &lt; percentiles &amp; percentiles&lt;= 75 ~ &quot;upper mid&quot;, 25 &lt; percentiles &amp; percentiles&lt;= 50 ~ &quot;lower mid&quot;, percentiles&lt;= 25 &amp; percentiles&gt; 0 ~ &quot;low&quot;)) %&gt;%
+  arrange(desc(percentiles))
+ 
+# View dataset.
+grouped_countries</code></pre>
+<pre><code>##           Country 2021_Happiness_Score Health_index percentiles
+## 1         Finland                 7.84         0.93         100
+## 2         Denmark                 7.62         0.92          99
+## 3     Switzerland                 7.57         0.93          98
+## 4         Iceland                 7.55         0.93          97
+## 5     Netherlands                 7.46         0.90          96
+## 6          Norway                 7.39         0.93          95
+## 7          Sweden                 7.36         0.93          94
+## 8      Luxembourg                 7.32         0.92          93
+## 9     New Zealand                 7.28         0.92          92
+## 10        Austria                 7.27         0.90          91
+## 11      Australia                 7.18         0.94          90
+## 12        Germany                 7.16         0.92          89
+## 13         Israel                 7.16         0.89          88
+## 14         Canada                 7.10         0.92          87
+## 15        Ireland                 7.08         0.91          86
+## 16     Costa Rica                 7.07         0.85          85
+## 17 United Kingdom                 7.06         0.89          84
+## 18 Czech Republic                 6.96         0.87          83
+## 19  United States                 6.95         0.76          82
+## 20        Belgium                 6.83         0.89          81
+##    score_categories
+## 1              high
+## 2              high
+## 3              high
+## 4              high
+## 5              high
+## 6              high
+## 7              high
+## 8              high
+## 9              high
+## 10             high
+## 11             high
+## 12             high
+## 13             high
+## 14             high
+## 15             high
+## 16             high
+## 17             high
+## 18             high
+## 19             high
+## 20             high
+##  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 122 rows ]</code></pre>
+<pre class="r"><code># View only the United States.
+grouped_countries %&gt;%
+  filter(Country == &quot;United States&quot;)</code></pre>
+<pre><code>##         Country 2021_Happiness_Score Health_index percentiles score_categories
+## 1 United States                 6.95         0.76          82             high</code></pre>
+<p>I wanted to create a new categorical variable called score_categories. So, I grouped the countries in the health_and_happiness dataset into 4 percentiles: high (happiness scores and health indexes above the 75th percentile), upper mid (happiness scores and health indexes between the 50th and 75th percentiles), lower mid (happiness scores and health indexes between the 25th and 50th percentiles), and low (happiness scores and health indexes below the 25th percentile). I also used the filter function to see which percentile the United States was in (82nd percentile).</p>
+<pre class="r"><code># Calculate average happiness scores and health indexes per category.
+country_category_means &lt;- grouped_countries %&gt;%
+  # Group by categories.
+  group_by(score_categories) %&gt;%
+  # Find mean happiness scores and health indexes.
+  summarise_if(is.numeric, mean, na.rm = T) %&gt;%
+  # Arrange from greatest to least. 
+  arrange(desc(`2021_Happiness_Score`)) %&gt;%
+  # Drop percentiles variable.
+  select(-c(percentiles))
+
+country_category_means</code></pre>
+<pre><code>## # A tibble: 4 × 3
+##   score_categories `2021_Happiness_Score` Health_index
+##   &lt;chr&gt;                             &lt;dbl&gt;        &lt;dbl&gt;
+## 1 high                               7.13        0.896
+## 2 upper mid                          6.26        0.813
+## 3 lower mid                          5.56        0.665
+## 4 low                                4.39        0.361</code></pre>
+<p>Then, I calculated the average Happiness Scores and Health indexes based on the new country categories. You can see how happiness scores and health indexes both decrease from the high to low categories. This supports my hypothesis that countries with higher happiness scores also have comparatively higher health indexes.</p>
+<pre class="r"><code># Save total number of countries.
+total_num &lt;- grouped_countries %&gt;%
+  # Tally all rows.
+  tally()
+
+# Find percentage of countries in each category.
+grouped_countries %&gt;%
+  # Group by categories
+  group_by(score_categories) %&gt;%
+  # Count number of countries in each category. Calculate count percentages using total number of countries.
+  summarise(counts = n(), percentages = n()/total_num[,1]) %&gt;%
+  # Arrange categories. 
+  arrange(c(&#39;high&#39;, &#39;upper mid&#39;, &#39;lower mid&#39;, &#39;low&#39;))</code></pre>
+<pre><code>## # A tibble: 4 × 3
+##   score_categories counts percentages
+##   &lt;chr&gt;             &lt;int&gt;       &lt;dbl&gt;
+## 1 high                 25       0.176
+## 2 upper mid            25       0.176
+## 3 lower mid            42       0.296
+## 4 low                  50       0.352</code></pre>
+<p>Finally, I wanted to see the percentage of countries per category. There are 142 countries total in the dataset. Approximately 17.6% of all the countries would be considered to have “high” happiness scores and health indexes; 17.6% would have moderately high happiness scores and health indexes; 29.6% would have moderately low happiness scores and health indexes; and 35.2% would have low happiness scores and health indexes.</p>
+</div>
+<div id="visualizations" class="section level1">
+<h1>Visualizations</h1>
+<pre class="r"><code># Create bar graph of 4 categories.
+ggplot(country_category_means, aes(x = Health_index, y = `2021_Happiness_Score`,
+                              fill = score_categories)) + 
+  # Superimpose function on existing plot.
+  geom_bar(stat = &quot;identity&quot;) +
+  # Change color scale.
+  scale_fill_brewer(palette = &quot;Set2&quot;) +
+  # Add title. 
+  labs(title = &quot;Average Happiness Score and Health Index Across Countries&quot;) + 
+  # Change theme.
+  theme_bw() + 
+  # Change x-axis scale.
+  scale_x_continuous(breaks = seq(from = 0, to = 1, by = 0.1))</code></pre>
+<p><img src="/project1_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" />
+I wanted to create a bar graph to better illustrate the relationship between countries’ happiness scores and health indexes. You can clearly see how as health index increases, so does happiness score. There is also a substantial gap between countries in the low category versus lower mid. This is concerning because 35.2% of the countries in the dataset are found in the low category - this means that over a third of the total countries in the dataset have significantly lower happiness scores and health indexes compared to the other countries.</p>
+<pre class="r"><code># Graph showing relationship between countries&#39; happiness scores and health indexes.
+health_and_happiness %&gt;%
+  # Omit missing values.
+  na.omit() %&gt;%
+  ggplot(aes(x = Health_index, y = `2021_Happiness_Score`)) + 
+  # Change size of points.
+  geom_point(size = 3) + 
+  # Add regression line and change color.
+  geom_smooth(formula = y ~ x, method = lm, color = &quot;#007d3c&quot;) +
+  # Add title and label axes.
+   labs(title = &quot;Relationship Between Country&#39;s Health Index and Happiness Score&quot;, 
+       x = &quot;2021 Health Index&quot;, y = &quot;2021 Happiness Score&quot;) + 
+  # Change theme.
+  theme_bw() + 
+  # Change x-axis scale.
+  scale_x_continuous(breaks = seq(from = 0, to = 1, by = 0.2))</code></pre>
+<p><img src="/project1_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" />
+This graph truly expresses the relationship between health index and happiness scores. You can see that there is a relatively strong, positive linear relationship between health index and happiness score. There does not appear to be any significant outliers, and the points of the graph are relatively clustered together.</p>
+<pre class="r"><code># install.packages(&quot;GGally&quot;)
+# Call GGally package
+library(&quot;GGally&quot;)
+
+# Create correlation plot for all variables except country. Adjust size and position of labels, as well as layout. Add title and move legend to bottom.
+ggcorr(health_and_happiness[,2:11], label = TRUE, hjust = 1, size = 2.8, layout.exp = 5) + ggplot2::labs(title = &quot;Correlation Plot for Health and Happiness Data&quot;) + theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="/project1_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" />
+I used the GGally package to create a correlation plot. Then, I modified the scale for each of the variable titles, adjusted the layout, added a title for my plot,and changed the theme so that the legend was found at the bottom.
+We again see that there is a strong, positive linear relationship between happiness score and health index (the score on the plot is rounded to 0.7, from the coefficient of 0.7475 that we calculated earlier). We also see that there is a strong, positive linear relationship between health index and the following variables: life expectancy (correlation coefficient is 0.9), and % of Birth attended by skilled (0.8). There is a strong, negative linear relationship between health index and the following variables: maternal mortality ratio (-0.9), Under 5 mortality rate (-0.9), Mortality rate from unsafe water (-0.9), and mortality rate attributed to unintentional poisoning (-0.8). There is a moderate, negative linear relationship between health index and the following variables: Cancer death rate 30-70 years (-0.5), and Mortality rate attributed to household and ambient air pollution (-0.4). Each of these results supports the idea that positive health trends translate to a country having a higher health index. Countries with a high life expectancy and percentage of births attended by qualified personnel have good health standards. Similarly, having low mortality rates indicates that the country has higher health standards.</p>
+<p>Thus, when looking at the results of my project, including the various graphs and summary statistics, there is reasonable evidence to support my hypothesis that the countries with the highest health indexes will also have the highest happiness scores. Additionally, positive health trends do seem to result in a higher health index (ie. low mortality rates, high life expectancy, etc.)
+```
+————————————————————————</p>
+</div>
+
+            
+        <hr>         <div class="related-posts">
+                <h5>Related Posts</h5>
+                
+              </div> 
+            </div>
+          </div>
+
+   <hr>  <div class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+
+    (function() {
+      
+      
+      if (window.location.hostname == "localhost")
+        return;
+
+      var disqus_shortname = '';
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div> 
+        </div>
+      </div>
+    </div>
+
+    
+    <footer>
+  <div id="footer">
+    <div class="container">
+      <p class="text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> and
+      <a href="http://www.github.com/nurlansu/hugo-sustain/">sustain</a> with ♥</p>
+    </div>
+  </div>
+</footer>
+<div class="footer"></div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="/js/docs.min.js"></script>
+<script src="/js/main.js"></script>
+
+<script src="/js/ie10-viewport-bug-workaround.js"></script>
+
+
+    
+  </body>
+</html>
